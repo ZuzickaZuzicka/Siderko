@@ -1,0 +1,110 @@
+<!DOCTYPE html>  
+<html lang="sk">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Aplikácia História</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            margin: 0;  
+            padding: 0;  
+            background: linear-gradient(135deg, #800080, #da70d6, #ff69b4);  
+            color: white;  
+            min-height: 100vh;  
+            display: flex;  
+            flex-direction: column;  
+            align-items: center;  
+        }  
+        button {  
+            background-color: #4b0082;  
+            color: white;  
+            border: none;  
+            padding: 10px 20px;  
+            margin: 5px;  
+            cursor: pointer;  
+            border-radius: 5px;  
+            font-size: 16px;  
+        }  
+        button:hover {  
+            background-color: #6a0dad;  
+        }  
+        table {  
+            width: 90%;  
+            border-collapse: collapse;  
+            margin-top: 20px;  
+            background: white;  
+            color: black;  
+            border-radius: 5px;  
+            overflow: hidden;  
+        }  
+        th, td {  
+            border: 1px solid #ddd;  
+            text-align: left;  
+            padding: 8px;  
+        }  
+        th {  
+            background-color: #4b0082;  
+            color: white;  
+            font-weight: bold;  
+        }  
+        tr:nth-child(even) {  
+            background-color: #f9f9f9;  
+        }  
+        tr:nth-child(odd) {  
+            background-color: #f2f2f2;  
+        }  
+        #app {  
+            padding: 20px;  
+        }  
+        #login-screen {  
+            padding: 20px;  
+            text-align: center;  
+        }  
+        h1, h2 {  
+            color: #ffffff;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div id="login-screen">  
+        <h2>Prihlásenie do aplikácie</h2>  
+        <button id="login-button">Prihlásiť sa</button>  
+    </div>  
+    <div id="app" style="display: none;">  
+        <h1>História Záznamov</h1>  
+        <button onclick="toggleHistory()">Zobraziť históriu</button>  
+        <div id="history" style="display: none;">  
+            <table id="record-list">  
+                <!-- Tabuľka bude dynamicky naplnená -->  
+            </table>  
+        </div>  
+        <h2>Pridanie záznamu</h2>  
+        <input type="date" id="record-date">  
+        <input type="time" id="record-time">  
+        <label for="throw-up-check">Vracanie:</label>  
+        <input type="checkbox" id="throw-up-check">  
+        <input type="text" id="trigger" placeholder="Impulz">  
+        <input type="text" id="food-after" placeholder="Jedlo po vracaní">  
+        <input type="text" id="comments" placeholder="Komentár">  
+        <button onclick="addRecord()">Pridať záznam</button>  
+        <div id="stats"></div>  
+        <h2>Filter záznamov</h2>  
+        <input type="date" id="filter-date-start">  
+        <input type="time" id="filter-time-start">  
+        <input type="date" id="filter-date-end">  
+        <input type="time" id="filter-time-end">  
+        <button onclick="applyFilter()">Použiť filter</button>  
+    </div>  
+    <script>  
+        let records = [];  
+
+        // Prihlásenie na heslo  
+        document.getElementById("login-button").onclick = accessApp;  
+
+        function accessApp() {  
+            const passwordInput = prompt("Zadajte heslo:");  
+            if (passwordInput === "zuzana") {  
+                document.getElementById("login-screen").style.display = "none"; // Skrytie prihlasovacej obrazovky  
+                document.getElementById("app").style.display = "block"; // Zobrazenie hlavnej aplikácie  
+                loadRecords(); // Načítanie existuj
